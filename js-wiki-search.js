@@ -10,19 +10,6 @@ if(cmdArguments.length <= 1) {
 		logFileName = cmdArguments[0];
 	}
 
-	//console.log("Enter name of article to search: ");
-
-    /*Figure out a way to terminate this.*/
-    /*var stdin = process.openStdin();
-
-    stdin.addListener("data", function(input) {
-        article_query = input.toString().replace("\n","").split(" ").map(function(element) {
-            return element.substring(0,1).toUpperCase() + element.substring(1,element.length).toLowerCase();
-        }).join("+");
-
-        mainWork(article_query,logFileName);
-    });*/
-
     var rl = require('readline');
       var stdInterface = rl.createInterface(process.stdin, process.stdout, null);
       stdInterface.question('Enter name of article to search: ', function(input) {
