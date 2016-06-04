@@ -10,10 +10,10 @@ if(cmdArguments.length <= 1) {
 		logFileName = cmdArguments[0];
 	}
 
-	console.log("Enter name of article to search: ");
+	//console.log("Enter name of article to search: ");
 
     /*Figure out a way to terminate this.*/
-    var stdin = process.openStdin();
+    /*var stdin = process.openStdin();
 
     stdin.addListener("data", function(input) {
         article_query = input.toString().replace("\n","").split(" ").map(function(element) {
@@ -21,7 +21,21 @@ if(cmdArguments.length <= 1) {
         }).join("+");
 
         mainWork(article_query,logFileName);
-    });
+    });*/
+
+    var rl = require('readline');
+      var stdInterface = rl.createInterface(process.stdin, process.stdout, null);
+      stdInterface.question('Enter name of article to search: ', function(input) {
+        //console.log("Article to search: " + input);
+        stdInterface.close();
+        process.stdin.destroy();
+        //console.log("Creating query");
+        article_query = input.toString().replace("\n","").split(" ").map(function(element) {
+            return element.substring(0,1).toUpperCase() + element.substring(1,element.length).toLowerCase();
+        }).join("+");
+        //console.log("Calling mainWork");
+        mainWork(article_query,logFileName);
+      });
 } else {
 	logFileName = cmdArguments[0];
 	cmdArguments.shift();
@@ -60,6 +74,8 @@ function mainWork(article_query, logFileName) {
                 nodeFS.writeFile(logFileName,allLinks);
                 nodeFS.close(fd);
             });
+
+            console.log("You can see the wiki link in " + logFileName);
         });
     }).on('error', function(e){
           console.log("Got an error: ", e);
